@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class ObjectDrag : MonoBehaviour
 {
-    private bool isDragging = false;
-    private Vector3 offset;
+    protected bool isDragging = false;
+    protected Vector3 offset;
+    protected Vector3 startPosition;
 
-    void Update()
+    
+    protected virtual void Update()
+    {
+        objDrag();
+    }
+
+    protected void objDrag()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -22,6 +29,7 @@ public class ObjectDrag : MonoBehaviour
                     // 클릭한 오브젝트가 현재 스크립트가 부착된 오브젝트인 경우
                     isDragging = true;
                     offset = transform.position - hit.point;
+                    startPosition = transform.position;
                 }
             }
         }
