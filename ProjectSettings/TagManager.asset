@@ -7,6 +7,7 @@ TagManager:
   - Flower
   - Honey
   - HoneyBee
+  - FlowerPowder
   layers:
   - Default
   - TransparentFX

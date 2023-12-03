@@ -34,7 +34,7 @@ public class FillGauge : ObjectDrag
                     isFull = true;
                     
                     gameObject.SetActive(false);
-                    kit.SetActive(false);
+                    
                 }
             }
             

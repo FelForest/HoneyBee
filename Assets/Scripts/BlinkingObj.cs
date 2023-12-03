@@ -13,13 +13,17 @@ public class BlinkingObj : MonoBehaviour
     private bool isSpawn = false;
     public GameObject gague;
     public GameObject kit;
+    public bool isBlink;
     void Start()
     {
         rend = GetComponent<Renderer>();
         spawn = GetComponent<SpawnObj>();
+
+        if (isBlink)
+        {
+            StartBlick();
+        }
         
-        
-        StartBlick();
     }
 
     void StartBlick()
@@ -31,6 +35,8 @@ public class BlinkingObj : MonoBehaviour
     public void Clicked()
     {
         isClicked = true;
+        gague.SetActive(true);
+        kit.SetActive(true);
     }
 
     private void Update()
@@ -61,8 +67,7 @@ public class BlinkingObj : MonoBehaviour
         {
             rend.material.color = color1;
         }
-        gague.SetActive(true);
-        kit.SetActive(true);
+        
         yield return null;
     }
 }
