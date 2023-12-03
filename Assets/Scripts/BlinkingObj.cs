@@ -11,14 +11,14 @@ public class BlinkingObj : MonoBehaviour
     [SerializeField] private float timeStep = 0.5f;
     private bool isClicked = false;
     private bool isSpawn = false;
-    GameObject gague;
-    GameObject brush;
+    public GameObject gague;
+    public GameObject kit;
     void Start()
     {
         rend = GetComponent<Renderer>();
         spawn = GetComponent<SpawnObj>();
-        gague = transform.Find("GagueUI").gameObject;
-        brush = transform.Find("Brush").gameObject;
+        
+        
         StartBlick();
     }
 
@@ -35,7 +35,7 @@ public class BlinkingObj : MonoBehaviour
 
     private void Update()
     {
-        if (brush.GetComponent<FillGauge>().isFull && !isSpawn)
+        if (kit.GetComponent<FillGauge>().isFull && !isSpawn)
         {
             isSpawn = true;
             spawn.spawnObj();
@@ -49,14 +49,20 @@ public class BlinkingObj : MonoBehaviour
     {
         while (!isClicked)
         {
-            rend.material.color = color1; // 반짝이는 색상으로 변경
-            yield return new WaitForSeconds(timeStep);
-            rend.material.color = color2; // 반짝이지 않는 원래 색상으로 변경
-            yield return new WaitForSeconds(timeStep);
+            if (rend.material != null)
+            {
+                rend.material.color = color1; // 반짝이는 색상으로 변경
+                yield return new WaitForSeconds(timeStep);
+                rend.material.color = color2; // 반짝이지 않는 원래 색상으로 변경
+                yield return new WaitForSeconds(timeStep);
+            }
         }
-        rend.material.color = color1;
+        if(rend.material != null)
+        {
+            rend.material.color = color1;
+        }
         gague.SetActive(true);
-        brush.SetActive(true);
+        kit.SetActive(true);
         yield return null;
     }
 }

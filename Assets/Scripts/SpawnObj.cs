@@ -7,6 +7,6 @@ public class SpawnObj : MonoBehaviour
     public GameObject obj;
     public void spawnObj()
     {
-        Instantiate(obj);
+        Instantiate(obj,transform);
     }
 }
