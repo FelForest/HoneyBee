@@ -11,6 +11,7 @@ public class FillGauge : ObjectDrag
     public float movementThreshold = 1.0f;
     public float maxGauge = 1.0f;
     public Slider gauge;
+    public GameObject gagueUI;
     internal bool isFull = false;
     public GameObject kit;
     protected override void Update()
@@ -32,7 +33,7 @@ public class FillGauge : ObjectDrag
                 {
                     Debug.Log("Gague Full");
                     isFull = true;
-                    
+                    gagueUI.SetActive(false);
                     gameObject.SetActive(false);
                     
                 }

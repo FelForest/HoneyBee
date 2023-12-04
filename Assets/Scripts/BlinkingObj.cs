@@ -14,6 +14,8 @@ public class BlinkingObj : MonoBehaviour
     public GameObject gague;
     public GameObject kit;
     public bool isBlink;
+    public bool WantedSpawn = true;
+    public GameObject nextObj;
     void Start()
     {
         rend = GetComponent<Renderer>();
@@ -44,7 +46,15 @@ public class BlinkingObj : MonoBehaviour
         if (kit.GetComponent<FillGauge>().isFull && !isSpawn)
         {
             isSpawn = true;
-            spawn.spawnObj();
+            if (WantedSpawn)
+            {
+                spawn.spawnObj();
+            }
+            else
+            {
+                nextObj.SetActive(true);
+            }
+            
         }
         
     }

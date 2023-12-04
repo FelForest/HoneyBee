@@ -8,6 +8,7 @@ public class GatteringFlowerPowder : MonoBehaviour
     public Text text;
     [SerializeField]
     int count = 0;
+    public GameObject HoneyPot;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,17 +18,24 @@ public class GatteringFlowerPowder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(count == 3)
-        {
-            text.text = "≤‹¿ª ∏∏µÈ¿⁄!";
-        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-       if (other.tag == "FlowerPowder")
+       if (other.gameObject.CompareTag("FlowerPowder"))
         {
-            text.text = count + "/3";
+            Destroy(other.gameObject);
+            if(count < 2)
+            {
+                count++;
+                text.text = count + "/3";
+            }
+            else
+            {
+                text.text = "≤‹¿ª ∏∏µÈ¿⁄!";
+                HoneyPot.SetActive(true);
+            }
         }
     }
 }
