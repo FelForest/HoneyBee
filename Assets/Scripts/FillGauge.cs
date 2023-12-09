@@ -19,7 +19,7 @@ public class FillGauge : ObjectDrag
         base.Update();
 
         // 움직인 거리가 일정 이상이면 디버그 출력
-        if (isDragging && Vector3.Distance(transform.position, startPosition) > movementThreshold)
+        if (Vector3.Distance(transform.position, startPosition) > movementThreshold)
         {
             if (!isFull )
             {
