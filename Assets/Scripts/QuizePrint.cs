@@ -2,22 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class QuizePrint : MonoBehaviour
 {
     public string[] Contents;
     public Text content;
     public bool[] answers;
-    private int num = 0;
     public GameObject result;
-    public float waitTime = 2.0f;
-    public GameObject gagueUI;
-    public Slider gague;
-    public GameObject Honey;
+    public GameObject Gague;
+
+    public GameObject[] honeys;
+
+    private int num = 0;
+    private bool isLoaded = false;
+    private Slider value;
+
+    public GameObject honeyPot;
     // Start is called before the first frame update
     void Start()
     {
-        gagueUI.SetActive(true); gague.value = 0 ;
+        Gague.SetActive(true);
+        value = Gague.GetComponentInChildren<Slider>();
+        value.value = 0.0f;
+        
     }
 
     // Update is called once per frame
@@ -28,45 +36,54 @@ public class QuizePrint : MonoBehaviour
 
     public void ButtonClicked(bool value)
     {
-        if(num + 1 < Contents.Length)
+        
+        if (!isLoaded)
         {
-            StartCoroutine(WaitSecond(waitTime,value));
+            isLoaded = true;
             
+
+            StartCoroutine(WaitLoaded(value));
         }
     }
 
-    IEnumerator WaitSecond(float second, bool value)
+    IEnumerator WaitLoaded(bool answer)
     {
-        if (num < Contents.Length)
+        Debug.Log(num);
+        if(num < answers.Length)
         {
-            result.SetActive(true);
-            if (value == answers[num])
+            
+            string ans;
+            if(answer == answers[num])
             {
-                result.GetComponent<Text>().text = "O";
+                ans = "O";
             }
             else
             {
-                result.GetComponent<Text>().text = "X";
+                ans = "X";
             }
-            yield return new WaitForSeconds(second);
-            result.SetActive(false);
-
             num++;
-            gague.value = num * (gague.maxValue / answers.Length);
-            if (num < Contents.Length)
+            result.SetActive(true);
+            result.GetComponent<Text>().text = ans;
+            value.value = num * (value.maxValue / Contents.Length);
+            yield return new WaitForSeconds(2.0f);
+            result.SetActive(false);
+            
+            if (num == 3)
+            {
+                honeyPot.GetComponent<XRSimpleInteractable>().enabled = false;
+                honeyPot.GetComponent<XRGrabInteractable>().enabled = true;
+                gameObject.SetActive(false);
+            }
+            else
             {
                 content.text = Contents[num];
+                isLoaded = false;
             }
-
-
+            
+            
+            
         }
-        if (num == 3)
-        {
-            Honey.SetActive(true);
-            gagueUI.SetActive(false);
-            gameObject.SetActive(false);
-        }
-        Debug.Log(num);
         
+        yield return null;
     }
 }
