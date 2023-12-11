@@ -30,15 +30,21 @@ public class GatherPowder : MonoBehaviour
             count += 1;
             if(count != maxCount)
             {
-                text.text = count + " / " + maxCount;
+                text.text = "꽃가루 "+ (maxCount - count) + "개 더 모아줘!";
             }
             else
             {
                 text.text = "그럼 이제 돌아가자!";
                 //신 전환
-                
+                StartCoroutine(DelaySecond());
             }
             
         }
+    }
+
+    IEnumerator DelaySecond()
+    {
+        yield return new WaitForSeconds(2.0f);
+        SceneManager.LoadScene(2);
     }
 }

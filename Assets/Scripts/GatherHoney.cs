@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class GatherHoney : MonoBehaviour
 {
     public string[] texts;
     public Text text;
+    public GameObject bg;
+    public bool st;
+    
+    public int scenenum;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(st)
+        {
+            StartCoroutine(StartText());
+        }
     }
 
     // Update is called once per frame
@@ -24,6 +33,11 @@ public class GatherHoney : MonoBehaviour
         Debug.Log("√‚µπ");
         if (other.gameObject.CompareTag("Honey"))
         {
+            if (bg != null)
+            {
+                bg.SetActive(true);
+            }
+            
             other.gameObject.SetActive(false);
             StartCoroutine(StartText());
         }
@@ -35,6 +49,11 @@ public class GatherHoney : MonoBehaviour
         {
             text.text = t;
             yield return new WaitForSeconds(2.0f);
+        }
+
+        if(scenenum == 1)
+        {
+            SceneManager.LoadScene(scenenum);
         }
         yield return null;
     }
